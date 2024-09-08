@@ -1,13 +1,15 @@
 "use client"
 import {useState} from "react";
 import "../../style/global.css";
-import {LOGIN_WINDOW_TITLE} from "@/app/constants";
+import {BASE_URL, LOGIN_URL, LOGIN_WINDOW_TITLE} from "@/app/constants";
 
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false); // To handle loading state
+
 
     // Function to validate email format
     const validateEmail = (email: string) => {
@@ -25,7 +27,7 @@ export default function LoginPage() {
     };
 
     // Handle form submission
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         // Check if email is valid before submitting
@@ -36,9 +38,39 @@ export default function LoginPage() {
 
         // Reset error if email is valid
         setError('');
+        setLoading(true);
 
-        // Proceed with login logic (e.g., call an API)
-        console.log('Logging in:', { email, password });
+        const loginData = {
+            email: email,
+            password: password,
+        };
+
+        try {
+            // Send a POST request to the login API
+            const response = await fetch(`${BASE_URL}${LOGIN_URL}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(loginData),
+            });
+
+            const data = await response.json();
+
+            // Handle response
+            if (response.ok) {
+                console.log('Login successful:', data);
+                window.location.href = "/contents";
+            } else {
+                console.error('Login failed:', data);
+                setError(data.message || 'Login failed');
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+            setError('An error occurred while logging in.');
+        } finally {
+            setLoading(false); // Stop loading
+        }
     };
 
     return (
