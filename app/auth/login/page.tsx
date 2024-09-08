@@ -82,6 +82,11 @@ export default function LoginPage() {
                     >
                         Login
                     </button>
+                    <div className="flex justify-end mt-2">
+                        <a href="/auth/register" className="text-blue-500 hover:underline">
+                            Register
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>
