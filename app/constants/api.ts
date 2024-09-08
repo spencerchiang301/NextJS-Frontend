@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://172.16.1.100:9000';
+export const BASE_URL = 'http://localhost:9900';
 export const LOGIN_URL = '/auth/login';
 export const REGISTER_URL = '/auth/register';
 export const REGISTER_SUCCESS = '/auth/registerSuccess';
