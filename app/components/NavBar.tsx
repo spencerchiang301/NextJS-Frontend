@@ -14,6 +14,12 @@ export default function NavBar() {
                     <Link href="/auth/register" className="text-white hover:text-gray-400">
                         Register
                     </Link>
+                    <Link href="/contents" className="text-white hover:text-gray-400">
+                        Contents
+                    </Link>
+                    <Link href="/contents/add" className="text-white hover:text-gray-400">
+                        Add Blog
+                    </Link>
                 </div>
             </div>
         </nav>
