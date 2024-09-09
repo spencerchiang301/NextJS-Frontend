@@ -13,7 +13,6 @@ export default function LeftPart({
                                  }: LeftPartProps) {
     return (
         <div className="w-1/4 bg-white p-4 shadow-lg">
-            <h2 className="text-xl font-bold mb-4">Categories</h2>
             <ul>
                 {categories.map((category) => (
                     <li

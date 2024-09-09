@@ -2,18 +2,15 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { LOGOUT_WINDOW_TITLE } from "@/app/constants";
+import { signOut } from "next-auth/react";
 
 export default function LogoutPage() {
     const router = useRouter();
 
     useEffect(() => {
-        // Set a timeout to redirect to the login page after 3 seconds
-        const timeout = setTimeout(() => {
-            router.push("/api/auth/login"); // Redirect to the login page
-        }, 3000);
-
-        // Clear the timeout if the component is unmounted before the 3 seconds
-        return () => clearTimeout(timeout);
+        signOut({
+            callbackUrl: "/api/auth/login",
+        }).then(r => {});
     }, [router]); // Add router as a dependency
 
     return (
