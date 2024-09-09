@@ -64,32 +64,6 @@ export default function LoginPage() {
             // await router.push('/contents'); // redirect to your protected page
         }
 
-        // try {
-        //     // Send a POST request to the login API
-        //     const response = await fetch(`${BASE_URL}${LOGIN_URL}`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify(loginData),
-        //     });
-        //
-        //     const data = await response.json();
-        //
-        //     // Handle response
-        //     if (response.ok) {
-        //         console.log('Login successful:', data);
-        //         window.location.href = "/contents";
-        //     } else {
-        //         console.error('Login failed:', data);
-        //         setError(data.message || 'Login failed');
-        //     }
-        // } catch (error) {
-        //     console.error('Error during login:', error);
-        //     setError('An error occurred while logging in.');
-        // } finally {
-        //     setLoading(false); // Stop loading
-        // }
     };
 
     return (

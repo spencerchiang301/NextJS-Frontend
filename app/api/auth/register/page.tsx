@@ -1,7 +1,11 @@
 "use client";
 import "../../../style/global.css";
-import { REGISTER_WINDOW_TITLE } from "@/app/constants";
-import { useState } from "react";
+import {BASE_URL, REGISTER_URL, REGISTER_WINDOW_TITLE} from "@/app/constants";
+import { useState, useEffect } from "react";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
 
 export default function RegisterPage() {
     const [email, setEmail] = useState('');
@@ -12,6 +16,16 @@ export default function RegisterPage() {
     const [nameError, setNameError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [confirmPasswordError, setConfirmPasswordError] = useState("");
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false); // To handle loading state
+    const { data: session } = useSession(); // Check current session
+    const router = useRouter();
+
+    useEffect(() => {
+        if (session) {
+            signOut({ redirect: false }); // Clear session without redirecting
+        }
+    }, [session]);
 
     // Function to validate email format
     const validateEmail = (email: string) => {
@@ -90,22 +104,58 @@ export default function RegisterPage() {
         confirmPassword === "";
 
     // Handle form submission
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        const emailValidationError = validateEmail(email);
         const nameValidationError = validateName(name);
         const passwordValidationError = validatePassword(password);
         const passwordMatchError = validatePasswordMatch(password, confirmPassword);
 
-        if (nameValidationError || passwordValidationError || passwordMatchError) {
+        if (nameValidationError || passwordValidationError || passwordMatchError || emailValidationError) {
             setNameError(nameValidationError);
             setPasswordError(passwordValidationError);
             setConfirmPasswordError(passwordMatchError);
+            setEmailError(emailValidationError);
             return;
         }
 
+        const registerData ={
+            name: name,
+            email: email,
+            password: password,
+        }
+
+        try {
+            // Send a POST request to the login API
+            const response = await fetch(`${BASE_URL}${REGISTER_URL}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(registerData),
+            });
+
+            const data = await response.json();
+
+            // Handle response
+            if (response.ok) {
+                console.log('Register successful:', data);
+                window.location.href = "/api/auth/login";
+            } else {
+                console.error('Register failed:', data);
+                setError(data.message || 'Register failed');
+            }
+        } catch (error) {
+            console.error('Error during register:', error);
+            setError('An error occurred while register a new user.');
+        } finally {
+            setLoading(false); // Stop loading
+        }
+
+
         // Proceed with registration logic (e.g., API call)
-        console.log("Registering:", { name, password });
+        console.log("Registering:", {name, password});
     };
 
     return (
@@ -189,6 +239,7 @@ export default function RegisterPage() {
                             login
                         </a>
                     </div>
+                    {error && <p className="text-red-500 mt-2">{error}</p>}
                 </form>
             </div>
         </div>
