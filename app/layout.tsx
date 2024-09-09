@@ -1,5 +1,6 @@
 import './style/global.css';
 import NavBar from './components/NavBar';
+import SessionProviderWrapper from "@/app/SessionProviderWrapper";
 
 export const metadata = {
     title: 'My Website',
@@ -14,8 +15,12 @@ export default function RootLayout({
     return (
         <html lang="en">
         <body>
-        <NavBar />
-        <main>{children}</main>
+        <SessionProviderWrapper>
+            <NavBar />
+            <main>
+                {children}
+            </main>
+        </SessionProviderWrapper>
         </body>
         </html>
     );

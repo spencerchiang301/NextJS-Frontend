@@ -1,5 +1,5 @@
 "use client";
-import "../../style/global.css";
+import "../../../style/global.css";
 import { REGISTER_WINDOW_TITLE } from "@/app/constants";
 import { useState } from "react";
 
@@ -185,7 +185,7 @@ export default function RegisterPage() {
                         Register a new user
                     </button>
                     <div className="flex justify-end mt-2">
-                        <a href="/auth/login" className="text-blue-500 hover:underline">
+                        <a href="/api/auth/login" className="text-blue-500 hover:underline">
                             login
                         </a>
                     </div>
