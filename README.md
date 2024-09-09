@@ -1,4 +1,4 @@
-This is a demo code based on NextJS to develop a blog web site.
+Based on NextJS to develop a blog web site.
 
 1. using nextjs app router to implement the routing
 2. use tailwind style
@@ -7,7 +7,7 @@ This is a demo code based on NextJS to develop a blog web site.
 
 這是一個基於NextJS開發部落格網站的示範程式碼。
 
-1. 使用nextjs app router實作路由
+1. 使用NextJS App Route 格式架構
 2. 使用順風風格
-3. 支援語言編碼，如編碼編輯器
+3. 支援語言編碼顯示，如編碼編輯器
 4. 如果你想顯示來自後端資料庫的數據，只需使用 data/blog.ts 等數據格式
