@@ -9,7 +9,7 @@ export default function LogoutPage() {
     useEffect(() => {
         // Set a timeout to redirect to the login page after 3 seconds
         const timeout = setTimeout(() => {
-            router.push("/auth/login"); // Redirect to the login page
+            router.push("/api/auth/login"); // Redirect to the login page
         }, 3000);
 
         // Clear the timeout if the component is unmounted before the 3 seconds

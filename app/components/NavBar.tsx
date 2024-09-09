@@ -5,13 +5,13 @@ export default function NavBar() {
         <nav className="bg-gray-800 p-4">
             <div className="container mx-auto flex justify-between">
                 <div className="flex space-x-4">
-                    <Link href="/auth/login" className="text-white hover:text-gray-400">
+                    <Link href="/api/auth/login" className="text-white hover:text-gray-400">
                         Login
                     </Link>
-                    <Link href="/auth/logout" className="text-white hover:text-gray-400">
+                    <Link href="/api/auth/logout" className="text-white hover:text-gray-400">
                         Logout
                     </Link>
-                    <Link href="/auth/register" className="text-white hover:text-gray-400">
+                    <Link href="/api/auth/register" className="text-white hover:text-gray-400">
                         Register
                     </Link>
                     {/*<Link href="/contents" className="text-white hover:text-gray-400">*/}

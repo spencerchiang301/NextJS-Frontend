@@ -1,7 +1,10 @@
 "use client"
 import {useState} from "react";
-import "../../style/global.css";
+import "../../../style/global.css";
 import {BASE_URL, LOGIN_URL, LOGIN_WINDOW_TITLE} from "@/app/constants";
+import {signIn} from "next-auth/react";
+import { useRouter } from 'next/navigation';
+
 
 
 export default function LoginPage() {
@@ -9,6 +12,8 @@ export default function LoginPage() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false); // To handle loading state
+    const router = useRouter();
+
 
 
     // Function to validate email format
@@ -40,37 +45,51 @@ export default function LoginPage() {
         setError('');
         setLoading(true);
 
-        const loginData = {
-            email: email,
-            password: password,
-        };
+        // const loginData = {
+        //     email: email,
+        //     password: password,
+        // };
 
-        try {
-            // Send a POST request to the login API
-            const response = await fetch(`${BASE_URL}${LOGIN_URL}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(loginData),
-            });
+        const res = await signIn('credentials', {
+            redirect: false,
+            email,
+            password,
+        });
 
-            const data = await response.json();
-
-            // Handle response
-            if (response.ok) {
-                console.log('Login successful:', data);
-                window.location.href = "/contents";
-            } else {
-                console.error('Login failed:', data);
-                setError(data.message || 'Login failed');
-            }
-        } catch (error) {
-            console.error('Error during login:', error);
-            setError('An error occurred while logging in.');
-        } finally {
-            setLoading(false); // Stop loading
+        if (res?.error) {
+            setError('Invalid email or password');
+        } else {
+            // Redirect user after successful login
+            window.location.href = '/contents';
+            // await router.push('/contents'); // redirect to your protected page
         }
+
+        // try {
+        //     // Send a POST request to the login API
+        //     const response = await fetch(`${BASE_URL}${LOGIN_URL}`, {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify(loginData),
+        //     });
+        //
+        //     const data = await response.json();
+        //
+        //     // Handle response
+        //     if (response.ok) {
+        //         console.log('Login successful:', data);
+        //         window.location.href = "/contents";
+        //     } else {
+        //         console.error('Login failed:', data);
+        //         setError(data.message || 'Login failed');
+        //     }
+        // } catch (error) {
+        //     console.error('Error during login:', error);
+        //     setError('An error occurred while logging in.');
+        // } finally {
+        //     setLoading(false); // Stop loading
+        // }
     };
 
     return (
@@ -115,7 +134,7 @@ export default function LoginPage() {
                         Login
                     </button>
                     <div className="flex justify-end mt-2">
-                        <a href="/auth/register" className="text-blue-500 hover:underline">
+                        <a href="/api/auth/register" className="text-blue-500 hover:underline">
                             Register
                         </a>
                     </div>
