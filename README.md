@@ -7,7 +7,7 @@ This is a demo code based on NextJS to develop a blog web site.
 
 這是一個基於NextJS開發部落格網站的示範程式碼。
 
-使用nextjs app router實作路由
-使用順風風格
-支援語言編碼，如編碼編輯器
-如果你想顯示來自後端資料庫的數據，只需使用 data/blog.ts 等數據格式
+1. 使用nextjs app router實作路由
+2. 使用順風風格
+3. 支援語言編碼，如編碼編輯器
+4. 如果你想顯示來自後端資料庫的數據，只需使用 data/blog.ts 等數據格式
